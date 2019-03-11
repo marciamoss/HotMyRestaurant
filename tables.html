@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tables</title>
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Hot Restaurant</h1>
+      <h3>Current Reservations and Waiting List</h3>
+      <hr>
+      <a href="/reserve">
+        <button class="btn btn-danger btn-lg">
+          <span class="fa fa-eye"></span> Make Reservation</button>
+      </a>
+      <a href="/">
+        <button class="btn btn-danger btn-lg">
+          <span class="fa fa-th-list"></span> Home</button>
+      </a>
+    </div>
+    <div class="row">
+
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-header">
+            Current Reservations 
+          </div>
+          <div class="card-body" id="tables">
+            <br>
+          </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+              Waiting List  
+            </div>
+            <div class="card-body" id="waitlist">
+              <br>
+            </div>
+        </div>
+
+      </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+          <p>
+            <a href="/api/tables">API Table Link</a> |
+            <a href="/api/waitlist">API Wait List</a>
+        </div>
+      </footer>
+
+  </div>
+
+  
+    <script type="text/javascript">
+
+      $.get("/api/tables", function(data) {
+        for (let i = 0; i < data.length; i++) {
+            
+            let listGroupItem = $("<li class='list-group-item'>");
+            
+            listGroupItem.append($("<h2>").text("Table# " + (i+1)));  
+            listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+            listGroupItem.append($("<h3>").text("Ph#: " + data[i].phone));
+            listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+            listGroupItem.append($("<h3>").text("Unique ID: " + data[i].uniqueID));
+
+            $("#tables").append(listGroupItem);
+        }
+      });
+      $.get("/api/waitlist", function(data) {
+        for (let i = 0; i < data.length; i++) {
+            
+            let listGroupItem = $("<li class='list-group-item'>");
+            
+            listGroupItem.append($("<h2>").text("Table# " + (i+1)));  
+            listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+            listGroupItem.append($("<h3>").text("Ph#: " + data[i].phone));
+            listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+            listGroupItem.append($("<h3>").text("Unique ID: " + data[i].uniqueID));
+
+            $("#waitlist").append(listGroupItem);
+        }
+      });
+    </script>
+
+  
+</body>
+
+</html>
